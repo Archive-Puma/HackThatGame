@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"LastFight"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>15</ID>
+          <Description>"Endless Fight"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : LASTFIGHT.exe
+  Version: 
+  Date   : 2017-11-14
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(EndlessFight,89 48 28 48 8B 04 25 10 FE BD 07 48 8B 4E) // should be unique
+alloc(newmem,$1000,31600669)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rax+28],63
+  mov rax,[07BDFE10]
+  jmp return
+
+EndlessFight:
+  jmp newmem
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+return:
+registersymbol(EndlessFight)
+
+[DISABLE]
+
+EndlessFight:
+  db 89 48 28 48 8B 04 25 10 FE BD 07
+
+unregistersymbol(EndlessFight)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 31600669
+
+""+31600644: F3 0F 5A C0              -  cvtss2sd xmm0,xmm0
+""+31600648: 66 0F 57 C9              -  xorpd xmm1,xmm1
+""+3160064C: 66 0F 2F C8              -  comisd xmm1,xmm0
+""+31600650: 0F 82 5A 00 00 00        -  jb 316006B0
+""+31600656: 48 8B 4E 78              -  mov rcx,[rsi+78]
+""+3160065A: 48 8B C1                 -  mov rax,rcx
+""+3160065D: 83 39 00                 -  cmp dword ptr [rcx],00
+""+31600660: 48 63 49 28              -  movsxd  rcx,dword ptr [rcx+28]
+""+31600664: FF C9                    -  dec ecx
+""+31600666: 83 38 00                 -  cmp dword ptr [rax],00
+// ---------- INJECTING HERE ----------
+""+31600669: 89 48 28                 -  mov [rax+28],ecx
+""+3160066C: 48 8B 04 25 10 FE BD 07  -  mov rax,[07BDFE10]
+// ---------- DONE INJECTING  ----------
+""+31600674: 48 8B 4E 78              -  mov rcx,[rsi+78]
+""+31600678: 48 8B D1                 -  mov rdx,rcx
+""+3160067B: 83 3A 00                 -  cmp dword ptr [rdx],00
+""+3160067E: 48 63 49 28              -  movsxd  rcx,dword ptr [rcx+28]
+""+31600682: 89 88 80 01 00 00        -  mov [rax+00000180],ecx
+""+31600688: F3 0F 10 86 8C 00 00 00  -  movss xmm0,[rsi+0000008C]
+""+31600690: F3 0F 5A C0              -  cvtss2sd xmm0,xmm0
+""+31600694: F3 0F 10 0D A4 00 00 00  -  movss xmm1,[31600740]
+""+3160069C: F3 0F 5A C9              -  cvtss2sd xmm1,xmm1
+""+316006A0: F2 0F 58 C1              -  addsd xmm0,xmm1
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Improve this"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>808080</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>13</ID>
+              <Description>"No Damage"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : LASTFIGHT.exe
+  Version: 
+  Date   : 2017-11-14
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Immortal,F3 41 0F 11 6E 6C * * * * 46) // should be unique
+alloc(newmem,$1000,316227E1)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  jmp return
+
+Immortal:
+  jmp newmem
+  nop
+return:
+registersymbol(Immortal)
+
+[DISABLE]
+
+Immortal:
+  db F3 41 0F 11 6E 6C
+
+unregistersymbol(Immortal)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 316227E1
+
+""+316227B4: F3 0F 5A D2                    -  cvtss2sd xmm2,xmm2
+""+316227B8: F2 0F 5A D2                    -  cvtsd2ss xmm2,xmm2
+""+316227BC: F2 0F 5A C9                    -  cvtsd2ss xmm1,xmm1
+""+316227C0: F2 0F 5A C0                    -  cvtsd2ss xmm0,xmm0
+""+316227C4: 48 83 EC 20                    -  sub rsp,20
+""+316227C8: 49 BB A0 45 46 08 00 00 00 00  -  mov r11,UnityEngine:Mathf:Clamp
+""+316227D2: 41 FF D3                       -  call r11
+""+316227D5: 48 83 C4 20                    -  add rsp,20
+""+316227D9: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+""+316227DD: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+""+316227E1: F3 41 0F 11 6E 6C              -  movss [r14+6C],xmm5
+// ---------- DONE INJECTING  ----------
+""+316227E7: F3 41 0F 10 46 78              -  movss xmm0,[r14+78]
+""+316227ED: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+""+316227F1: F3 41 0F 10 4E 6C              -  movss xmm1,[r14+6C]
+""+316227F7: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+""+316227FB: F3 0F 10 55 E8                 -  movss xmm2,[rbp-18]
+""+31622800: F3 0F 5A D2                    -  cvtss2sd xmm2,xmm2
+""+31622804: F2 0F 5C CA                    -  subsd xmm1,xmm2
+""+31622808: F2 0F 58 C1                    -  addsd xmm0,xmm1
+""+3162280C: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+""+31622810: F3 41 0F 11 6E 78              -  movss [r14+78],xmm5
+}
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of movss [r14+6C],xmm5</Description>
+      <Address>316227E1</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>C0</Byte>
+        <Byte>F2</Byte>
+        <Byte>0F</Byte>
+        <Byte>5A</Byte>
+        <Byte>E8</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>41</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>6E</Byte>
+        <Byte>6C</Byte>
+      </Actual>
+      <After>
+        <Byte>F3</Byte>
+        <Byte>41</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>46</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <Comments>Info about this table:
+</Comments>
+</CheatTable>

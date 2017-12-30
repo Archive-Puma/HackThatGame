@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Blast Shooter GunGuy!"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Immortal"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : BlasterShooterGunGuy.exe
+  Version: 
+  Date   : 2017-11-13
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Immortal,49 89 48 4C 8B 47 18 8B 40 4C 85 C0 0F 8F D1) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  nop
+  mov [eax+4C],ecx
+  mov eax,[edi+18]
+  jmp return
+
+Immortal:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(Immortal)
+
+[DISABLE]
+
+Immortal:
+  db 49 89 48 4C 8B 47 18
+
+unregistersymbol(Immortal)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 07A8183F
+
+""+7A81825: 73 10              -  jae 07A81837
+""+7A81827: 8B CE              -  mov ecx,esi
+""+7A81829: C1 E1 02           -  shl ecx,02
+""+7A8182C: B8 98 24 A8 07     -  mov eax,07A82498
+""+7A81831: 03 C1              -  add eax,ecx
+""+7A81833: 8B 00              -  mov eax,[eax]
+""+7A81835: FF E0              -  jmp eax
+""+7A81837: 8B 47 18           -  mov eax,[edi+18]
+""+7A8183A: 8B C8              -  mov ecx,eax
+""+7A8183C: 8B 49 4C           -  mov ecx,[ecx+4C]
+// ---------- INJECTING HERE ----------
+""+7A8183F: 49                 -  dec ecx
+""+7A81840: 89 48 4C           -  mov [eax+4C],ecx
+""+7A81843: 8B 47 18           -  mov eax,[edi+18]
+// ---------- DONE INJECTING  ----------
+""+7A81846: 8B 40 4C           -  mov eax,[eax+4C]
+""+7A81849: 85 C0              -  test eax,eax
+""+7A8184B: 0F 8F D1 0B 00 00  -  jg 07A82422
+""+7A81851: 8B 47 18           -  mov eax,[edi+18]
+""+7A81854: 0F B6 40 54        -  movzx eax,byte ptr [eax+54]
+""+7A81858: 85 C0              -  test eax,eax
+""+7A8185A: 0F 85 C2 0B 00 00  -  jne 07A82422
+""+7A81860: 8B 47 18           -  mov eax,[edi+18]
+""+7A81863: C6 40 54 01        -  mov byte ptr [eax+54],01
+""+7A81867: 83 EC 08           -  sub esp,08
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"Time Trial: Endless Time"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : BlasterShooterGunGuy.exe
+  Version: 
+  Date   : 2017-11-13
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Endless,E2 FC FF DD 45 F0 D9 C9 DE E9 D9 5F 1C) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  nop
+  nop
+  fstp dword ptr [edi+1C]
+  jmp return
+
+Endless+08:
+  jmp newmem
+return:
+registersymbol(Endless)
+
+[DISABLE]
+
+Endless+08:
+  db DE E9 D9 5F 1C
+
+unregistersymbol(Endless)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 07A86357
+
+""+7A8633D: D9 EE           -  fldz 
+""+7A8633F: DF F1           -  fcomip st(0),st(1)
+""+7A86341: DD D8           -  fstp st(0)
+""+7A86343: 7A 1D           -  jp 07A86362
+""+7A86345: 73 1B           -  jae 07A86362
+""+7A86347: D9 47 1C        -  fld dword ptr [edi+1C]
+""+7A8634A: DD 5D F0        -  fstp qword ptr [ebp-10]
+""+7A8634D: E8 0E E2 FC FF  -  call 07A54560
+""+7A86352: DD 45 F0        -  fld qword ptr [ebp-10]
+""+7A86355: D9 C9           -  fxch st(1)
+// ---------- INJECTING HERE ----------
+""+7A86357: DE E9           -  fsubp st(1),st(0)
+""+7A86359: D9 5F 1C        -  fstp dword ptr [edi+1C]
+// ---------- DONE INJECTING  ----------
+""+7A8635C: C6 47 20 01     -  mov byte ptr [edi+20],01
+""+7A86360: EB 09           -  jmp 07A8636B
+""+7A86362: D9 EE           -  fldz 
+""+7A86364: D9 5F 1C        -  fstp dword ptr [edi+1C]
+""+7A86367: C6 47 20 00     -  mov byte ptr [edi+20],00
+""+7A8636B: 83 EC 0C        -  sub esp,0C
+""+7A8636E: 68 00 97 45 07  -  push 07459700
+""+7A86373: E8 40 B4 FD FF  -  call 07A617B8
+""+7A86378: 83 C4 10        -  add esp,10
+""+7A8637B: 3D 01 00 00 00  -  cmp eax,00000001
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Time Trial: Always Green Light"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : BlasterShooterGunGuy.exe
+  Version: 
+  Date   : 2017-11-13
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(GreenLight,C6 47 20 00 83 EC 0C 68 00 97 45 07 E8 40) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov byte ptr [edi+20],01
+  sub esp,0C
+  jmp return
+
+GreenLight:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(GreenLight)
+
+[DISABLE]
+
+GreenLight:
+  db C6 47 20 00 83 EC 0C
+
+unregistersymbol(GreenLight)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 07A86367
+
+""+7A8634A: DD 5D F0           -  fstp qword ptr [ebp-10]
+""+7A8634D: E8 0E E2 FC FF     -  call 07A54560
+""+7A86352: DD 45 F0           -  fld qword ptr [ebp-10]
+""+7A86355: D9 C9              -  fxch st(1)
+""+7A86357: DE E9              -  fsubp st(1),st(0)
+""+7A86359: D9 5F 1C           -  fstp dword ptr [edi+1C]
+""+7A8635C: C6 47 20 01        -  mov byte ptr [edi+20],01
+""+7A86360: EB 09              -  jmp 07A8636B
+""+7A86362: D9 EE              -  fldz 
+""+7A86364: D9 5F 1C           -  fstp dword ptr [edi+1C]
+// ---------- INJECTING HERE ----------
+""+7A86367: C6 47 20 00        -  mov byte ptr [edi+20],00
+""+7A8636B: 83 EC 0C           -  sub esp,0C
+// ---------- DONE INJECTING  ----------
+""+7A8636E: 68 00 97 45 07     -  push 07459700
+""+7A86373: E8 40 B4 FD FF     -  call 07A617B8
+""+7A86378: 83 C4 10           -  add esp,10
+""+7A8637B: 3D 01 00 00 00     -  cmp eax,00000001
+""+7A86380: 75 1F              -  jne 07A863A1
+""+7A86382: D9 47 1C           -  fld dword ptr [edi+1C]
+""+7A86385: D9 EE              -  fldz 
+""+7A86387: DF F1              -  fcomip st(0),st(1)
+""+7A86389: DD D8              -  fstp st(0)
+""+7A8638B: 7A 14              -  jp 07A863A1
+}
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of fsubp st(1),st(0)</Description>
+      <Address>07A86357</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>DD</Byte>
+        <Byte>45</Byte>
+        <Byte>F0</Byte>
+        <Byte>D9</Byte>
+        <Byte>C9</Byte>
+      </Before>
+      <Actual>
+        <Byte>DE</Byte>
+        <Byte>E9</Byte>
+      </Actual>
+      <After>
+        <Byte>D9</Byte>
+        <Byte>5F</Byte>
+        <Byte>1C</Byte>
+        <Byte>C6</Byte>
+        <Byte>47</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of call UnityEngine:Object:Destroy</Description>
+      <Address>07A863D7</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>10</Byte>
+        <Byte>83</Byte>
+        <Byte>EC</Byte>
+        <Byte>0C</Byte>
+        <Byte>50</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>FC</Byte>
+        <Byte>D9</Byte>
+        <Byte>FE</Byte>
+        <Byte>FF</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+        <Byte>10</Byte>
+        <Byte>C9</Byte>
+        <Byte>C3</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of mov byte ptr [edi+20],00</Description>
+      <Address>07A86367</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>D9</Byte>
+        <Byte>EE</Byte>
+        <Byte>D9</Byte>
+        <Byte>5F</Byte>
+        <Byte>1C</Byte>
+      </Before>
+      <Actual>
+        <Byte>C6</Byte>
+        <Byte>47</Byte>
+        <Byte>20</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>EC</Byte>
+        <Byte>0C</Byte>
+        <Byte>68</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of call eax</Description>
+      <Address>07A824E7</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>75</Byte>
+        <Byte>08</Byte>
+        <Byte>8B</Byte>
+        <Byte>45</Byte>
+        <Byte>14</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>D0</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+        <Byte>10</Byte>
+        <Byte>89</Byte>
+        <Byte>45</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of call ebx</Description>
+      <Address>100F0374</Address>
+      <ModuleName>mono.dll</ModuleName>
+      <ModuleNameOffset>F0374</ModuleNameOffset>
+      <Before>
+        <Byte>75</Byte>
+        <Byte>10</Byte>
+        <Byte>FF</Byte>
+        <Byte>75</Byte>
+        <Byte>0C</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>D3</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+        <Byte>10</Byte>
+        <Byte>5E</Byte>
+        <Byte>5B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of call eax</Description>
+      <Address>0857269F</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>75</Byte>
+        <Byte>08</Byte>
+        <Byte>8B</Byte>
+        <Byte>45</Byte>
+        <Byte>14</Byte>
+      </Before>
+      <Actual>
+        <Byte>FF</Byte>
+        <Byte>D0</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+        <Byte>10</Byte>
+        <Byte>89</Byte>
+        <Byte>45</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of call 08530060</Description>
+      <Address>08572691</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>10</Byte>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>74</Byte>
+        <Byte>05</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>CA</Byte>
+        <Byte>D9</Byte>
+        <Byte>FB</Byte>
+        <Byte>FF</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>EC</Byte>
+        <Byte>0C</Byte>
+        <Byte>FF</Byte>
+        <Byte>75</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of call System:Object:__icall_wrapper_mono_object_new_ptrfree_box</Description>
+      <Address>085726AF</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>68</Byte>
+        <Byte>1C</Byte>
+        <Byte>69</Byte>
+        <Byte>79</Byte>
+        <Byte>11</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>94</Byte>
+        <Byte>EB</Byte>
+        <Byte>FB</Byte>
+        <Byte>FF</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+        <Byte>10</Byte>
+        <Byte>8B</Byte>
+        <Byte>4D</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of call System:Object:__icall_wrapper_runtime_invoke_reset_abort</Description>
+      <Address>085726F9</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>E4</Byte>
+        <Byte>83</Byte>
+        <Byte>EC</Byte>
+        <Byte>0C</Byte>
+        <Byte>50</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>2A</Byte>
+        <Byte>98</Byte>
+        <Byte>FE</Byte>
+        <Byte>FF</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+        <Byte>10</Byte>
+        <Byte>EB</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"AutoFinder Online"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Borderlands2.exe
+  Version: 
+  Date   : 2017-11-27
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(AutoFinderOnline,Borderlands2.exe,8B 86 28 0A 00 00 33) // should be unique
+alloc(newmem,$1000)
+
+globalalloc(_playeronline,8)
+
+label(code)
+label(return)
+
+newmem:
+  mov [_playeronline], esi
+
+code:
+  mov eax,[esi+00000A28]
+  jmp return
+
+AutoFinderOnline:
+  jmp newmem
+  nop
+return:
+registersymbol(AutoFinderOnline)
+
+[DISABLE]
+
+AutoFinderOnline:
+  db 8B 86 28 0A 00 00
+
+unregistersymbol(AutoFinderOnline)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Borderlands2.exe"+DE774A
+
+"Borderlands2.exe"+DE7722: 85 05 E8 57 87 02  -  test [Borderlands2.exe+1F057E8],eax
+"Borderlands2.exe"+DE7728: 75 20              -  jne Borderlands2.exe+DE774A
+"Borderlands2.exe"+DE772A: 09 05 E8 57 87 02  -  or [Borderlands2.exe+1F057E8],eax
+"Borderlands2.exe"+DE7730: 6A 01              -  push 01
+"Borderlands2.exe"+DE7732: 6A 01              -  push 01
+"Borderlands2.exe"+DE7734: 68 6C DB 40 02     -  push Borderlands2.exe+1A9DB6C
+"Borderlands2.exe"+DE7739: B9 74 57 87 02     -  mov ecx,Borderlands2.exe+1F05774
+"Borderlands2.exe"+DE773E: C6 45 FC 13        -  mov byte ptr [ebp-04],13
+"Borderlands2.exe"+DE7742: E8 E9 20 A5 FF     -  call Borderlands2.exe+839830
+"Borderlands2.exe"+DE7747: 88 5D FC           -  mov [ebp-04],bl
+// ---------- INJECTING HERE ----------
+"Borderlands2.exe"+DE774A: 8B 86 28 0A 00 00  -  mov eax,[esi+00000A28]
+// ---------- DONE INJECTING  ----------
+"Borderlands2.exe"+DE7750: 33 C9              -  xor ecx,ecx
+"Borderlands2.exe"+DE7752: 8B 96 D4 09 00 00  -  mov edx,[esi+000009D4]
+"Borderlands2.exe"+DE7758: 3B C3              -  cmp eax,ebx
+"Borderlands2.exe"+DE775A: 0F 9E C1           -  setle cl
+"Borderlands2.exe"+DE775D: 89 55 D4           -  mov [ebp-2C],edx
+"Borderlands2.exe"+DE7760: 49                 -  dec ecx
+"Borderlands2.exe"+DE7761: 23 C8              -  and ecx,eax
+"Borderlands2.exe"+DE7763: 8B 86 08 0A 00 00  -  mov eax,[esi+00000A08]
+"Borderlands2.exe"+DE7769: 89 4D E0           -  mov [ebp-20],ecx
+"Borderlands2.exe"+DE776C: 89 45 D8           -  mov [ebp-28],eax
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Current Ammo"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>_playeronline</Address>
+          <Offsets>
+            <Offset>A28</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>_playeronline</Name>
+      <Address>4EBE0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>

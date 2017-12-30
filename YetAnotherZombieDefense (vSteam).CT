@@ -5,20 +5,213 @@
       <ID>4</ID>
       <Description>"Yet Another Zombie Defense 2"</Description>
       <Options moHideChildren="1"/>
-      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <LastState Value="" RealAddress="00000000"/>
       <GroupHeader>1</GroupHeader>
       <CheatEntries>
         <CheatEntry>
-          <ID>7</ID>
-          <Description>"Useful Scripts"</Description>
+          <ID>34</ID>
+          <Description>"Scripts"</Description>
           <Options moHideChildren="1"/>
-          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>35</ID>
+              <Description>"Invencible"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>11</ID>
+                  <Description>"ASM: Invencible (Full Health)"</Description>
+                  <LastState Activated="1"/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
+  Version: LastVersion
+  Date   : 2017-10-26
+  Author : Cosas de Puma
+
+  This script avoid all the damage (zombies are immortal too!)
+}
+
+[ENABLE]
+
+aobscan(Invencible,A4 00 00 00 D9 9E A4 00 00 00 8B) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+label(fullhealth)
+
+newmem:
+code:
+  fstp dword ptr [esi+000000A4]
+
+fullhealth:
+  cmp [esi+20],0
+  je return
+  mov [esi+000000A4], (float)1
+  jmp return
+
+Invencible+04:
+  jmp newmem
+  nop
+
+return:
+registersymbol(Invencible)
+
+[DISABLE]
+
+Invencible+04:
+  db D9 9E A4 00 00 00
+
+unregistersymbol(Invencible)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0A88FB73
+
+""+A88FB4B: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
+""+A88FB51: 75 02                 -  jne 0A88FB55
+""+A88FB53: EB 0C                 -  jmp 0A88FB61
+""+A88FB55: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
+""+A88FB5A: E8 D1 94 27 51        -  call clr.dll+19030
+""+A88FB5F: 8B D0                 -  mov edx,eax
+""+A88FB61: 83 BA 38 01 00 00 02  -  cmp dword ptr [edx+00000138],02
+""+A88FB68: 74 0F                 -  je 0A88FB79
+""+A88FB6A: D9 45 20              -  fld dword ptr [ebp+20]
+""+A88FB6D: D8 AE A4 00 00 00     -  fsubr dword ptr [esi+000000A4]
+// ---------- INJECTING HERE ----------
+""+A88FB73: D9 9E A4 00 00 00     -  fstp dword ptr [esi+000000A4]
+// ---------- DONE INJECTING  ----------
+""+A88FB79: 8B 15 48 38 19 05     -  mov edx,[05193848]
+""+A88FB7F: 85 D2                 -  test edx,edx
+""+A88FB81: 74 16                 -  je 0A88FB99
+""+A88FB83: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
+""+A88FB89: 75 02                 -  jne 0A88FB8D
+""+A88FB8B: EB 0C                 -  jmp 0A88FB99
+""+A88FB8D: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
+""+A88FB92: E8 99 94 27 51        -  call clr.dll+19030
+""+A88FB97: 8B D0                 -  mov edx,eax
+""+A88FB99: 38 82 08 01 00 00     -  cmp [edx+00000108],al
+}
+
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>36</ID>
+              <Description>"Teleport"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>37</ID>
+                  <Description>"Warning: Game may crash when deactivate scripts"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <Color>0000FF</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>15</ID>
+                      <Description>"ASM: Teleport zombies to light (hit)"</Description>
+                      <LastState/>
+                      <VariableType>Auto Assembler Script</VariableType>
+                      <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
+  Version: LastVersion
+  Date   : 2017-10-26
+  Author : Cosas de Puma
+
+  This script teleport hitted players or zombies next to the light.
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+ 
+aobscan(Teleport,A4 00 00 00 D9 9E A4 00 00 00 8B) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+label(teleport)
+
+newmem:
+code:
+  fstp dword ptr [esi+000000A4]
+
+teleport:
+  cmp [esi+20],0
+  jne return
+  mov [esi+58],(float)15.43792534
+  mov [esi+5C],(float)14.99090481
+  jmp return
+
+Teleport+04:
+  jmp newmem
+  nop
+
+return:
+registersymbol(Teleport)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+Teleport+04:
+  db D9 9E A4 00 00 00
+
+unregistersymbol(Teleport)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0A88FB73
+
+0A88FB4B: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
+0A88FB51: 75 02                 -  jne 0A88FB55
+0A88FB53: EB 0C                 -  jmp 0A88FB61
+0A88FB55: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
+0A88FB5A: E8 D1 94 27 51        -  call clr.dll+19030
+0A88FB5F: 8B D0                 -  mov edx,eax
+0A88FB61: 83 BA 38 01 00 00 02  -  cmp dword ptr [edx+00000138],02
+0A88FB68: 74 0F                 -  je 0A88FB79
+0A88FB6A: D9 45 20              -  fld dword ptr [ebp+20]
+0A88FB6D: D8 AE A4 00 00 00     -  fsubr dword ptr [esi+000000A4]
+// ---------- INJECTING HERE ----------
+0A88FB73: D9 9E A4 00 00 00     -  fstp dword ptr [esi+000000A4]
+// ---------- DONE INJECTING  ----------
+0A88FB79: 8B 15 48 38 19 05     -  mov edx,[05193848]
+0A88FB7F: 85 D2                 -  test edx,edx
+0A88FB81: 74 16                 -  je 0A88FB99
+0A88FB83: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
+0A88FB89: 75 02                 -  jne 0A88FB8D
+0A88FB8B: EB 0C                 -  jmp 0A88FB99
+0A88FB8D: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
+0A88FB92: E8 99 94 27 51        -  call clr.dll+19030
+0A88FB97: 8B D0                 -  mov edx,eax
+0A88FB99: 38 82 08 01 00 00     -  cmp [edx+00000108],al
+}
+</AssemblerScript>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Old Scripts"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>C0C0C0</Color>
           <GroupHeader>1</GroupHeader>
           <CheatEntries>
             <CheatEntry>
               <ID>23</ID>
               <Description>"+9 Levels"</Description>
-              <LastState Activated="1"/>
+              <LastState/>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
   Version: LastVersion
@@ -170,7 +363,7 @@ dealloc(newmem)
             <CheatEntry>
               <ID>3</ID>
               <Description>"$999.999 Zombie Killer Worth"</Description>
-              <LastState Activated="1"/>
+              <LastState/>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
   Version: LastVersion
@@ -241,31 +434,22 @@ dealloc(newmem)
 
 </AssemblerScript>
             </CheatEntry>
-          </CheatEntries>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>16</ID>
-          <Description>"I really need to improve this"</Description>
-          <Options moHideChildren="1"/>
-          <LastState Value="" Activated="1" RealAddress="00000000"/>
-          <GroupHeader>1</GroupHeader>
-          <CheatEntries>
             <CheatEntry>
-              <ID>11</ID>
-              <Description>"Everyone is immortal"</Description>
-              <LastState/>
+              <ID>33</ID>
+              <Description>"Speedfire"</Description>
+              <LastState Activated="1"/>
               <VariableType>Auto Assembler Script</VariableType>
-	      <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
-  Version: LastVersion
-  Date   : 2017-10-26
-  Author : Cosas de Puma
+              <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
+  Version: 
+  Date   : 2017-10-30
+  Author : Gatete
 
-  This script avoid all the damage (zombies are immortal too!)
+  This script does blah blah blah
 }
 
 [ENABLE]
 
-aobscan(Invencible,A4 00 00 00 D9 9E A4 00 00 00 8B) // should be unique
+aobscan(NoCooldown,D9 5E 60 8B CE) // should be unique
 alloc(newmem,$1000)
 
 label(code)
@@ -274,74 +458,70 @@ label(return)
 newmem:
 
 code:
-  fstp dword ptr [esi+000000A4]
-  mov [esi+000000A4], (float)1
+  fstp dword ptr [esi+60]
+  mov [esi+60],(float)0
+  mov ecx,esi
   jmp return
 
-Invencible+04:
+NoCooldown:
   jmp newmem
-  nop
 return:
-registersymbol(Invencible)
+registersymbol(NoCooldown)
 
 [DISABLE]
 
-Invencible+04:
-  db D9 9E A4 00 00 00
+NoReload:
+  db D9 5E 60 8B CE
 
-unregistersymbol(Invencible)
+unregistersymbol(NoCooldown)
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: 0A88FB73
+// ORIGINAL CODE - INJECTION POINT: 2195FF72
 
-""+A88FB4B: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
-""+A88FB51: 75 02                 -  jne 0A88FB55
-""+A88FB53: EB 0C                 -  jmp 0A88FB61
-""+A88FB55: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
-""+A88FB5A: E8 D1 94 27 51        -  call clr.dll+19030
-""+A88FB5F: 8B D0                 -  mov edx,eax
-""+A88FB61: 83 BA 38 01 00 00 02  -  cmp dword ptr [edx+00000138],02
-""+A88FB68: 74 0F                 -  je 0A88FB79
-""+A88FB6A: D9 45 20              -  fld dword ptr [ebp+20]
-""+A88FB6D: D8 AE A4 00 00 00     -  fsubr dword ptr [esi+000000A4]
+""+2195FF56: DF F1                 -  fcomip st(0),st(1)
+""+2195FF58: DD D8                 -  fstp st(0)
+""+2195FF5A: 7A 02                 -  jp 2195FF5E
+""+2195FF5C: 73 08                 -  jae 2195FF66
+""+2195FF5E: 81 E7 FF 00 00 00     -  and edi,000000FF
+""+2195FF64: 74 50                 -  je 2195FFB6
+""+2195FF66: D9 46 50              -  fld dword ptr [esi+50]
+""+2195FF69: D8 6E 54              -  fsubr dword ptr [esi+54]
+""+2195FF6C: D9 5E 54              -  fstp dword ptr [esi+54]
+""+2195FF6F: D9 46 64              -  fld dword ptr [esi+64]
 // ---------- INJECTING HERE ----------
-""+A88FB73: D9 9E A4 00 00 00     -  fstp dword ptr [esi+000000A4]
+""+2195FF72: D9 5E 60              -  fstp dword ptr [esi+60]
+""+2195FF75: 8B CE                 -  mov ecx,esi
 // ---------- DONE INJECTING  ----------
-""+A88FB79: 8B 15 48 38 19 05     -  mov edx,[05193848]
-""+A88FB7F: 85 D2                 -  test edx,edx
-""+A88FB81: 74 16                 -  je 0A88FB99
-""+A88FB83: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
-""+A88FB89: 75 02                 -  jne 0A88FB8D
-""+A88FB8B: EB 0C                 -  jmp 0A88FB99
-""+A88FB8D: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
-""+A88FB92: E8 99 94 27 51        -  call clr.dll+19030
-""+A88FB97: 8B D0                 -  mov edx,eax
-""+A88FB99: 38 82 08 01 00 00     -  cmp [edx+00000108],al
+""+2195FF77: FF 15 F0 A8 5F 0D     -  call dword ptr [0D5FA8F0]
+""+2195FF7D: 80 7E 75 00           -  cmp byte ptr [esi+75],00
+""+2195FF81: 75 08                 -  jne 2195FF8B
+""+2195FF83: 8B CE                 -  mov ecx,esi
+""+2195FF85: FF 15 C4 A8 5F 0D     -  call dword ptr [0D5FA8C4]
+""+2195FF8B: C6 46 77 01           -  mov byte ptr [esi+77],01
+""+2195FF8F: 80 7E 76 00           -  cmp byte ptr [esi+76],00
+""+2195FF93: 74 08                 -  je 2195FF9D
+""+2195FF95: 8B CE                 -  mov ecx,esi
+""+2195FF97: FF 15 14 A9 5F 0D     -  call dword ptr [0D5FA914]
 }
-
 </AssemblerScript>
             </CheatEntry>
             <CheatEntry>
-              <ID>15</ID>
-              <Description>"Everyone is teleported to light when is hitted"</Description>
+              <ID>29</ID>
+              <Description>"Infinite Grenades"</Description>
               <LastState/>
               <VariableType>Auto Assembler Script</VariableType>
               <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
-  Version: LastVersion
-  Date   : 2017-10-26
-  Author : Cosas de Puma
+  Version: 
+  Date   : 2017-10-29
+  Author : Gatete
 
-  This script teleport hitted players or zombies next to the light.
+  This script does blah blah blah
 }
 
 [ENABLE]
-//code from here to '[DISABLE]' will be used to enable the cheat
 
-
- 
- 
-aobscan(Teleport,A4 00 00 00 D9 9E A4 00 00 00 8B) // should be unique
+aobscan(InfGrenades,02 00 00 8B 44 B8 08 FF 48 20) // should be unique
 alloc(newmem,$1000)
 
 label(code)
@@ -350,51 +530,130 @@ label(return)
 newmem:
 
 code:
-  fstp dword ptr [esi+000000A4]
-  mov [esi+58],(float)15.43792534
-  mov [esi+5C],(float)14.99090481
+  mov eax,[eax+edi*4+08]
+  //dec [eax+20]
+  nop
+  nop
+  nop
   jmp return
 
-Teleport+04:
+InfGrenades+03:
   jmp newmem
   nop
+  nop
 return:
-registersymbol(Teleport)
+registersymbol(InfGrenades)
 
 [DISABLE]
-//code from here till the end of the code will be used to disable the cheat
-Teleport+04:
-  db D9 9E A4 00 00 00
 
-unregistersymbol(Teleport)
+InfGrenades+03:
+  db 8B 44 B8 08 FF 48 20
+
+unregistersymbol(InfGrenades)
 dealloc(newmem)
 
 {
-// ORIGINAL CODE - INJECTION POINT: 0A88FB73
+// ORIGINAL CODE - INJECTION POINT: 2011796C
 
-0A88FB4B: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
-0A88FB51: 75 02                 -  jne 0A88FB55
-0A88FB53: EB 0C                 -  jmp 0A88FB61
-0A88FB55: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
-0A88FB5A: E8 D1 94 27 51        -  call clr.dll+19030
-0A88FB5F: 8B D0                 -  mov edx,eax
-0A88FB61: 83 BA 38 01 00 00 02  -  cmp dword ptr [edx+00000138],02
-0A88FB68: 74 0F                 -  je 0A88FB79
-0A88FB6A: D9 45 20              -  fld dword ptr [ebp+20]
-0A88FB6D: D8 AE A4 00 00 00     -  fsubr dword ptr [esi+000000A4]
+""+20117946: A1 A8 35 BC 06        -  mov eax,[06BC35A8]
+""+2011794B: 8B 70 04              -  mov esi,[eax+04]
+""+2011794E: 3B 7E 0C              -  cmp edi,[esi+0C]
+""+20117951: 72 0D                 -  jb 20117960
+""+20117953: B9 0D 00 00 00        -  mov ecx,0000000D
+""+20117958: 8D 51 09              -  lea edx,[ecx+09]
+""+2011795B: E8 AC FB E3 3E        -  call mscorlib.ni.dll+B1750C
+""+20117960: 8B 46 04              -  mov eax,[esi+04]
+""+20117963: 3B 78 04              -  cmp edi,[eax+04]
+""+20117966: 0F 83 2F 02 00 00     -  jae 20117B9B
 // ---------- INJECTING HERE ----------
-0A88FB73: D9 9E A4 00 00 00     -  fstp dword ptr [esi+000000A4]
+""+2011796C: 8B 44 B8 08           -  mov eax,[eax+edi*4+08]
+""+20117970: FF 48 20              -  dec [eax+20]
 // ---------- DONE INJECTING  ----------
-0A88FB79: 8B 15 48 38 19 05     -  mov edx,[05193848]
-0A88FB7F: 85 D2                 -  test edx,edx
-0A88FB81: 74 16                 -  je 0A88FB99
-0A88FB83: 81 3A A0 0E EC 03     -  cmp [edx],03EC0EA0
-0A88FB89: 75 02                 -  jne 0A88FB8D
-0A88FB8B: EB 0C                 -  jmp 0A88FB99
-0A88FB8D: B9 A0 0E EC 03        -  mov ecx,03EC0EA0
-0A88FB92: E8 99 94 27 51        -  call clr.dll+19030
-0A88FB97: 8B D0                 -  mov edx,eax
-0A88FB99: 38 82 08 01 00 00     -  cmp [edx+00000108],al
+""+20117973: 83 78 20 00           -  cmp dword ptr [eax+20],00
+""+20117977: 7D 05                 -  jnl 2011797E
+""+20117979: 33 D2                 -  xor edx,edx
+""+2011797B: 89 50 20              -  mov [eax+20],edx
+""+2011797E: 8B 15 78 38 BC 06     -  mov edx,[06BC3878]
+""+20117984: 85 D2                 -  test edx,edx
+""+20117986: 74 16                 -  je 2011799E
+""+20117988: 81 3A A0 0E 0B 08     -  cmp [edx],080B0EA0
+""+2011798E: 75 02                 -  jne 20117992
+""+20117990: EB 0C                 -  jmp 2011799E
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>27</ID>
+              <Description>"No Reload/Inf. Ammo (Reload doesn't work with Tesla/Shotgun)"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : YetAnotherZombieDefense.exe
+  Version: 
+  Date   : 2017-10-29
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(NoReloadGun,D8 6E 54 D9 5E 54) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  //fsubr dword ptr [esi+54]
+  nop
+  nop
+  nop
+  fstp dword ptr [esi+54]
+  jmp return
+
+NoReloadGun:
+  jmp newmem
+  nop
+return:
+registersymbol(NoReloadGun)
+
+[DISABLE]
+
+NoReloadGun:
+  db D8 6E 54 D9 5E 54
+
+unregistersymbol(NoReloadGun)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 209EA009
+
+""+209E9FEF: 73 0D                 -  jae 209E9FFE
+""+209E9FF1: D9 46 60              -  fld dword ptr [esi+60]
+""+209E9FF4: D9 EE                 -  fldz 
+""+209E9FF6: DF F1                 -  fcomip st(0),st(1)
+""+209E9FF8: DD D8                 -  fstp st(0)
+""+209E9FFA: 7A 02                 -  jp 209E9FFE
+""+209E9FFC: 73 08                 -  jae 209EA006
+""+209E9FFE: 81 E7 FF 00 00 00     -  and edi,000000FF
+""+209EA004: 74 50                 -  je 209EA056
+""+209EA006: D9 46 50              -  fld dword ptr [esi+50]
+// ---------- INJECTING HERE ----------
+""+209EA009: D8 6E 54              -  fsubr dword ptr [esi+54]
+""+209EA00C: D9 5E 54              -  fstp dword ptr [esi+54]
+// ---------- DONE INJECTING  ----------
+""+209EA00F: D9 46 64              -  fld dword ptr [esi+64]
+""+209EA012: D9 5E 60              -  fstp dword ptr [esi+60]
+""+209EA015: 8B CE                 -  mov ecx,esi
+""+209EA017: FF 15 F0 A8 32 0D     -  call dword ptr [0D32A8F0]
+""+209EA01D: 80 7E 75 00           -  cmp byte ptr [esi+75],00
+""+209EA021: 75 08                 -  jne 209EA02B
+""+209EA023: 8B CE                 -  mov ecx,esi
+""+209EA025: FF 15 C4 A8 32 0D     -  call dword ptr [0D32A8C4]
+""+209EA02B: C6 46 77 01           -  mov byte ptr [esi+77],01
+""+209EA02F: 80 7E 76 00           -  cmp byte ptr [esi+76],00
 }
 </AssemblerScript>
             </CheatEntry>
@@ -639,7 +898,29 @@ dealloc(newmem)
         </Element>
         <Element Offset="240" Vartype="Pointer" Bytesize="4" Description="controller" DisplayMethod="Unsigned Integer"/>
         <Element Offset="244" Vartype="Pointer" Bytesize="4" Description="splitAnimation" DisplayMethod="Unsigned Integer"/>
-        <Element Offset="248" Vartype="Pointer" Bytesize="4" Description="legsController" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="248" Vartype="Pointer" Bytesize="4" Description="legsController" DisplayMethod="Unsigned Integer">
+          <Structure Name="TheGameNamespace.LegsControllerComponent" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="0" Vartype="Pointer" Bytesize="4" Description="Vtable" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="4" Vartype="Pointer" Bytesize="4" Description="hitSound" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="8" Vartype="Pointer" Bytesize="4" Description="destructionSound" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="12" Vartype="Byte" Bytesize="1" Description="thisModel" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="13" Vartype="Byte" Bytesize="1" Description="isUpgraded" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="14" Vartype="Byte" Bytesize="1" Description="thisModel" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="15" Vartype="Byte" Bytesize="1" Description="isPaused" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="16" Vartype="Pointer" Bytesize="4" Description="psrc" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="20" Vartype="Pointer" Bytesize="4" Description="modelComponent" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="24" Vartype="Pointer" Bytesize="4" Description="avatarComponent" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="28" Vartype="Float" Bytesize="4" Description="Rotation" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="32" Vartype="Float" Bytesize="4" Description="footstepTimer" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="36" Vartype="Byte" Bytesize="1" Description="hasPistol" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="40" Vartype="4 Bytes" Bytesize="4" Description="move" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="44" Vartype="4 Bytes" Bytesize="4" Description="move_2" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="48" Vartype="4 Bytes" Bytesize="4" Description="move_3" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="52" Vartype="4 Bytes" Bytesize="4" Description="move_4" DisplayMethod="Unsigned Integer"/>
+            </Elements>
+          </Structure>
+        </Element>
         <Element Offset="252" Vartype="Pointer" Bytesize="4" Description="getUserInfoRequest" DisplayMethod="Unsigned Integer"/>
         <Element Offset="256" Vartype="Pointer" Bytesize="4" Description="playerStats" DisplayMethod="Unsigned Integer">
           <Structure Name="Array" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
@@ -2761,6 +3042,65 @@ dealloc(newmem)
         <Element Offset="364" Vartype="4 Bytes" Bytesize="4" Description="ex_2" DisplayMethod="Unsigned Integer"/>
         <Element Offset="368" Vartype="4 Bytes" Bytesize="4" Description="ex_3" DisplayMethod="Unsigned Integer"/>
         <Element Offset="372" Vartype="4 Bytes" Bytesize="4" Description="ex_4" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="TheGameNamespace.Pistol" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="Pointer" Bytesize="4" Description="Vtable" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="4" Vartype="Pointer" Bytesize="4" Description="resendFireCountdown" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="8" Vartype="Pointer" Bytesize="4" Description="id" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" Description="weaponsByTypeResult" DisplayMethod="Signed Integer"/>
+        <Element Offset="16" Vartype="Byte" Bytesize="1" Description="posRotScale" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="17" Vartype="Byte" Bytesize="1" Description="weaponsDescriptions" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="18" Vartype="Byte" Bytesize="1" Description="name" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="19" Vartype="Byte" Bytesize="1" Description="rotateOnTargeting" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="20" Vartype="Pointer" Bytesize="4" Description="owner" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="4" Description="posRotScale" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="28" Vartype="Float" Bytesize="4" Description="accuracy" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="32" Vartype="Float" Bytesize="4" Description="effectiveRange" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="36" Vartype="4 Bytes" Bytesize="4" Description="id" DisplayMethod="Signed Integer"/>
+        <Element Offset="40" Vartype="Float" Bytesize="4" Description="resendFireCountdown" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="44" Vartype="4 Bytes" Bytesize="4" Description="pivotPosition" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="48" Vartype="4 Bytes" Bytesize="4" Description="pivotPosition_2" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="52" Vartype="Pointer" Bytesize="4" Description="modelComponent" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="56" Vartype="Pointer" Bytesize="4" Description="shootSound" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="60" Vartype="Pointer" Bytesize="4" Description="continuousShootSound" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="64" Vartype="Pointer" Bytesize="4" Description="smokeParticleName" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="68" Vartype="Pointer" Bytesize="4" Description="bulletsList" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="4" Description="bonesTransforms" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="76" Vartype="Pointer" Bytesize="4" Description="quadArray" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="80" Vartype="Float" Bytesize="4" Description="ammoPerShoot" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="84" Vartype="Float" Bytesize="4" Description="ammoLeft" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="88" Vartype="Float" Bytesize="4" Description="reloadTime" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="92" Vartype="Float" Bytesize="4" Description="reloadProgress" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="96" Vartype="Float" Bytesize="4" Description="cooldown" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="100" Vartype="Float" Bytesize="4" Description="cooldownTime" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="104" Vartype="Float" Bytesize="4" Description="remoteSoundTimeLeft" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="108" Vartype="Float" Bytesize="4" Description="smokeOnShootSize" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="112" Vartype="Float" Bytesize="4" Description="shootFlashSize" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="116" Vartype="Byte" Bytesize="1" Description="isOneHanded" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="117" Vartype="Byte" Bytesize="1" Description="isShootSoundContinuous" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="118" Vartype="Byte" Bytesize="1" Description="doCreateSmokeOnShoot" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="119" Vartype="Byte" Bytesize="1" Description="didShoot" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="120" Vartype="Byte" Bytesize="1" Description="didShootDrawValue" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="121" Vartype="Byte" Bytesize="1" Description="shootFlashEnabled" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="124" Vartype="Float" Bytesize="4" Description="outPosition" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="128" Vartype="Float" Bytesize="4" Description="outPosition_2" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="132" Vartype="Float" Bytesize="4" Description="outPosition_3" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="136" Vartype="Float" Bytesize="4" Description="outPosition_4" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="TheGameNamespace.Store" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="Pointer" Bytesize="4" Description="Vtable" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="4" Vartype="Pointer" Bytesize="4" Description="items" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="8" Vartype="Pointer" Bytesize="4" Description="buyAmmoContinuousSound" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="12" Vartype="Float" Bytesize="4" Description="cash" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" Description="score" DisplayMethod="Signed Integer"/>
+        <Element Offset="20" Vartype="4 Bytes" Bytesize="4" Description="killed" DisplayMethod="Signed Integer"/>
+        <Element Offset="24" Vartype="4 Bytes" Bytesize="4" Description="cashSpent" DisplayMethod="Signed Integer"/>
+        <Element Offset="28" Vartype="4 Bytes" Bytesize="4" Description="previousScore" DisplayMethod="Signed Integer"/>
+        <Element Offset="32" Vartype="Float" Bytesize="4" Description="previousCash" DisplayMethod="Unsigned Integer"/>
       </Elements>
     </Structure>
   </Structures>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Indie Game Battle"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"Timeless"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : Indie Game Battle.exe
+  Version: 
+  Date   : 2017-11-13
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Timeless,D9 9F 08 01 00 00 8B 87 C4) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  fstp dword ptr [edi+00000108]
+  mov [edi+00000108], (float)0
+  jmp return
+
+Timeless:
+  jmp newmem
+  nop
+return:
+registersymbol(Timeless)
+
+[DISABLE]
+
+Timeless:
+  db D9 9F 08 01 00 00
+
+unregistersymbol(Timeless)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 0867C622
+
+""+867C5FD: D9 04 24              -  fld dword ptr [esp]
+""+867C600: 83 C4 04              -  add esp,04
+""+867C603: DD 9D 58 FE FF FF     -  fstp qword ptr [ebp-000001A8]
+""+867C609: E8 82 3B FA FF        -  call 08620190
+""+867C60E: DD 85 60 FE FF FF     -  fld qword ptr [ebp-000001A0]
+""+867C614: DD 85 58 FE FF FF     -  fld qword ptr [ebp-000001A8]
+""+867C61A: D9 C9                 -  fxch st(1)
+""+867C61C: D9 CA                 -  fxch st(2)
+""+867C61E: DE C9                 -  fmulp st(1),st(0)
+""+867C620: DE C1                 -  faddp 
+// ---------- INJECTING HERE ----------
+""+867C622: D9 9F 08 01 00 00     -  fstp dword ptr [edi+00000108]
+// ---------- DONE INJECTING  ----------
+""+867C628: 8B 87 C4 00 00 00     -  mov eax,[edi+000000C4]
+""+867C62E: 3D 01 00 00 00        -  cmp eax,00000001
+""+867C633: 0F 85 A3 00 00 00     -  jne 0867C6DC
+""+867C639: 0F B6 87 10 01 00 00  -  movzx eax,byte ptr [edi+00000110]
+""+867C640: 85 C0                 -  test eax,eax
+""+867C642: 0F 84 62 00 00 00     -  je 0867C6AA
+""+867C648: D9 87 0C 01 00 00     -  fld dword ptr [edi+0000010C]
+""+867C64E: 33 C0                 -  xor eax,eax
+""+867C650: 50                    -  push eax
+""+867C651: DB 04 24              -  fild dword ptr [esp]
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"No More Damage"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : Indie Game Battle.exe
+  Version: 
+  Date   : 2017-11-13
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(NoDmg,D9 98 40 01 00 00 8D) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+label(zero)
+
+newmem:
+
+code:
+  fstp dword ptr [zero]
+  jmp return
+
+zero:
+  db (float)0
+
+NoDmg:
+  jmp newmem
+  nop
+return:
+registersymbol(NoDmg)
+
+[DISABLE]
+
+NoDmg:
+  db D9 98 40 01 00 00
+
+unregistersymbol(NoDmg)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 17E43BE0
+
+""+17E43BC1: 8B 4F 20           -  mov ecx,[edi+20]
+""+17E43BC4: D9 81 DC 01 00 00  -  fld dword ptr [ecx+000001DC]
+""+17E43BCA: B9 03 00 00 00     -  mov ecx,00000003
+""+17E43BCF: 51                 -  push ecx
+""+17E43BD0: DB 04 24           -  fild dword ptr [esp]
+""+17E43BD3: D9 1C 24           -  fstp dword ptr [esp]
+""+17E43BD6: D9 04 24           -  fld dword ptr [esp]
+""+17E43BD9: 83 C4 04           -  add esp,04
+""+17E43BDC: DE F9              -  fdivp st(1),st(0)
+""+17E43BDE: DE C1              -  faddp 
+// ---------- INJECTING HERE ----------
+""+17E43BE0: D9 98 40 01 00 00  -  fstp dword ptr [eax+00000140]
+// ---------- DONE INJECTING  ----------
+""+17E43BE6: 8D 47 34           -  lea eax,[edi+34]
+""+17E43BE9: C7 00 00 00 00 00  -  mov [eax],00000000
+""+17E43BEF: 8B 47 20           -  mov eax,[edi+20]
+""+17E43BF2: 8B 80 D8 00 00 00  -  mov eax,[eax+000000D8]
+""+17E43BF8: 3D 01 00 00 00     -  cmp eax,00000001
+""+17E43BFD: 75 22              -  jne 17E43C21
+""+17E43BFF: 8B 47 20           -  mov eax,[edi+20]
+""+17E43C02: D9 80 DC 01 00 00  -  fld dword ptr [eax+000001DC]
+""+17E43C08: B8 03 00 00 00     -  mov eax,00000003
+""+17E43C0D: 50                 -  push eax
+}
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>Info about this table:
+</Comments>
+</CheatTable>

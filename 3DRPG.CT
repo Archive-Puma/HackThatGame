@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"ASM: Immortal"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : 3DRPG.exe
+  Version: 
+  Date   : 2017-11-19
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Immortal,2B C6 89 43 44 83 EC 0C 53 E8 0C) // should be unique
+alloc(newmem,$100)
+
+label(code)
+label(return)
+
+newmem:
+  nop
+  nop
+
+code:
+  //sub eax,esi
+  mov [ebx+44],eax
+  jmp return
+
+Immortal:
+  jmp newmem
+return:
+registersymbol(Immortal)
+
+[DISABLE]
+
+Immortal:
+  db 2B C6 89 43 44
+
+unregistersymbol(Immortal)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 084F9AD6
+
+""+84F9ABA: E8 89 82 F3 FF        -  call System:String:op_Equality
+""+84F9ABF: 83 C4 10              -  add esp,10
+""+84F9AC2: 85 C0                 -  test eax,eax
+""+84F9AC4: 74 15                 -  je CharTemplate:takeDamage+93
+""+84F9AC6: 83 EC 08              -  sub esp,08
+""+84F9AC9: 56                    -  push esi
+""+84F9ACA: 53                    -  push ebx
+""+84F9ACB: E8 38 5F 00 00        -  call CharTemplate:activateHpBarFX
+""+84F9AD0: 83 C4 10              -  add esp,10
+""+84F9AD3: 8B 43 44              -  mov eax,[ebx+44]
+// ---------- INJECTING HERE ----------
+""+84F9AD6: 2B C6                 -  sub eax,esi
+""+84F9AD8: 89 43 44              -  mov [ebx+44],eax
+// ---------- DONE INJECTING  ----------
+""+84F9ADB: 83 EC 0C              -  sub esp,0C
+""+84F9ADE: 53                    -  push ebx
+""+84F9ADF: E8 0C 27 FF FF        -  call CharTemplate:updateHpBar
+""+84F9AE4: 83 C4 10              -  add esp,10
+""+84F9AE7: 8B 43 44              -  mov eax,[ebx+44]
+""+84F9AEA: 50                    -  push eax
+""+84F9AEB: DB 04 24              -  fild dword ptr [esp]
+""+84F9AEE: D9 1C 24              -  fstp dword ptr [esp]
+""+84F9AF1: D9 04 24              -  fld dword ptr [esp]
+""+84F9AF4: 83 C4 04              -  add esp,04
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"ASM: Infinite Stamina"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : 3DRPG.exe
+  Version: 
+  Date   : 2017-11-19
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(Stamina,89 43 4C 83 EC 0C 53 E8 38) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+  nop
+  nop
+  nop
+
+code:
+  //mov [ebx+4C],eax
+  sub esp,0C
+  jmp return
+
+Stamina:
+  jmp newmem
+  nop
+return:
+registersymbol(Stamina)
+
+[DISABLE]
+
+Stamina:
+  db 89 43 4C 83 EC 0C
+
+unregistersymbol(Stamina)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 084F9DAC
+
+""+84F9D8C: 0F 84 30 01 00 00  -  je 084F9EC2
+""+84F9D92: 83 EC 08           -  sub esp,08
+""+84F9D95: 68 58 DE 31 19     -  push 1931DE58
+""+84F9D9A: 57                 -  push edi
+""+84F9D9B: E8 A8 7F F3 FF     -  call 08431D48
+""+84F9DA0: 83 C4 10           -  add esp,10
+""+84F9DA3: 85 C0              -  test eax,eax
+""+84F9DA5: 74 08              -  je 084F9DAF
+""+84F9DA7: 8B 43 4C           -  mov eax,[ebx+4C]
+""+84F9DAA: 2B C6              -  sub eax,esi
+// ---------- INJECTING HERE ----------
+""+84F9DAC: 89 43 4C           -  mov [ebx+4C],eax
+""+84F9DAF: 83 EC 0C           -  sub esp,0C
+// ---------- DONE INJECTING  ----------
+""+84F9DB2: 53                 -  push ebx
+""+84F9DB3: E8 38 24 FF FF     -  call 084EC1F0
+""+84F9DB8: 83 C4 10           -  add esp,10
+""+84F9DBB: 8B 43 4C           -  mov eax,[ebx+4C]
+""+84F9DBE: 50                 -  push eax
+""+84F9DBF: DB 04 24           -  fild dword ptr [esp]
+""+84F9DC2: D9 1C 24           -  fstp dword ptr [esp]
+""+84F9DC5: D9 04 24           -  fld dword ptr [esp]
+""+84F9DC8: 83 C4 04           -  add esp,04
+""+84F9DCB: 8B 43 50           -  mov eax,[ebx+50]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"AutoFinder (when attack)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : 3DRPG.exe
+  Version: 
+  Date   : 2017-11-19
+  Author : Gatete
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscan(AutoFinder,83 C4 10 8B 58 4C EB) // should be unique
+alloc(newmem,$1000)
+
+globalalloc(player,8)
+
+label(code)
+label(return)
+
+newmem:
+  mov [player],eax
+
+code:
+  add esp,10
+  mov ebx,[eax+4C]
+  jmp return
+
+AutoFinder:
+  jmp newmem
+  nop
+return:
+registersymbol(AutoFinder)
+
+[DISABLE]
+
+AutoFinder:
+  db 83 C4 10 8B 58 4C
+
+unregistersymbol(AutoFinder)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 084F69EC
+
+""+84F69C8: 83 C4 10              -  add esp,10
+""+84F69CB: 89 86 A4 00 00 00     -  mov [esi+000000A4],eax
+""+84F69D1: 0F B6 86 A0 00 00 00  -  movzx eax,byte ptr [esi+000000A0]
+""+84F69D8: 85 C0                 -  test eax,eax
+""+84F69DA: 74 18                 -  je BattleHandler:spCheck+5c
+""+84F69DC: 39 3F                 -  cmp [edi],edi
+""+84F69DE: BA 10 99 8C 19        -  mov edx,198C9910
+""+84F69E3: 83 EC 0C              -  sub esp,0C
+""+84F69E6: 57                    -  push edi
+""+84F69E7: E8 8C FE F4 FF        -  call UnityEngine:GameObject:GetComponent
+// ---------- INJECTING HERE ----------
+""+84F69EC: 83 C4 10              -  add esp,10
+""+84F69EF: 8B 58 4C              -  mov ebx,[eax+4C]
+// ---------- DONE INJECTING  ----------
+""+84F69F2: EB 21                 -  jmp BattleHandler:spCheck+7d
+""+84F69F4: 0F B6 86 A0 00 00 00  -  movzx eax,byte ptr [esi+000000A0]
+""+84F69FB: 85 C0                 -  test eax,eax
+""+84F69FD: 75 16                 -  jne BattleHandler:spCheck+7d
+""+84F69FF: 39 3F                 -  cmp [edi],edi
+""+84F6A01: BA 20 9D 8C 19        -  mov edx,198C9D20
+""+84F6A06: 83 EC 0C              -  sub esp,0C
+""+84F6A09: 57                    -  push edi
+""+84F6A0A: E8 69 FE F4 FF        -  call UnityEngine:GameObject:GetComponent
+""+84F6A0F: 83 C4 10              -  add esp,10
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"Health"</Description>
+          <LastState Value="487756064" RealAddress="191DDE54"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>player</Address>
+          <Offsets>
+            <Offset>44</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"Max Health"</Description>
+          <LastState Value="487691904" RealAddress="191DDE58"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>player</Address>
+          <Offsets>
+            <Offset>48</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Stamina"</Description>
+          <LastState Value="487756040" RealAddress="191DDE5C"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>player</Address>
+          <Offsets>
+            <Offset>4C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"Max Stamina"</Description>
+          <LastState Value="444121248" RealAddress="191DDE60"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>player</Address>
+          <Offsets>
+            <Offset>50</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of mov eax,[ebx+4C]</Description>
+      <Address>084F9DBB</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>FF</Byte>
+        <Byte>FF</Byte>
+        <Byte>83</Byte>
+        <Byte>C4</Byte>
+        <Byte>10</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>43</Byte>
+        <Byte>4C</Byte>
+      </Actual>
+      <After>
+        <Byte>50</Byte>
+        <Byte>DB</Byte>
+        <Byte>04</Byte>
+        <Byte>24</Byte>
+        <Byte>D9</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Change of mov [ebx+4C],eax</Description>
+      <Address>084F9DAC</Address>
+      <ModuleName/>
+      <ModuleNameOffset>0</ModuleNameOffset>
+      <Before>
+        <Byte>8B</Byte>
+        <Byte>43</Byte>
+        <Byte>4C</Byte>
+        <Byte>2B</Byte>
+        <Byte>C6</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>43</Byte>
+        <Byte>4C</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>EC</Byte>
+        <Byte>0C</Byte>
+        <Byte>53</Byte>
+        <Byte>E8</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>player</Name>
+      <Address>06FF0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
